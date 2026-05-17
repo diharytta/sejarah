@@ -3,7 +3,7 @@ index.html
 style.css
  script.js
 
-    assets/                     <-- Buat folder ini!
+   assets/                     <-- Buat folder ini!
         sumpah-pemuda.jpg
         proklamasi.jpg
         surabaya.jpg
