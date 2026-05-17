@@ -1,0 +1,643 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', 'Merriweather', 'Poppins', Georgia, serif;
+    background: #2c1a0e;
+    color: #f9eed7;
+    min-height: 100vh;
+    position: relative;
+    padding: 1rem;
+}
+
+/* Batik overlay motif halus */
+.batik-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: radial-gradient(circle at 10% 20%, rgba(160, 100, 40, 0.08) 2%, transparent 2.5%),
+                      repeating-linear-gradient(45deg, rgba(210, 140, 70, 0.05) 0px, rgba(210, 140, 70, 0.05) 2px, transparent 2px, transparent 8px);
+    background-size: 35px 35px, 16px 16px;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.container {
+    max-width: 1100px;
+    width: 100%;
+    margin: 0 auto;
+    background: rgba(44, 26, 14, 0.75);
+    backdrop-filter: blur(3px);
+    border-radius: 56px 56px 48px 48px;
+    padding: 2rem;
+    box-shadow: 0 25px 45px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,215,150,0.2);
+    border: 1px solid #b97f44;
+    position: relative;
+    z-index: 2;
+}
+
+header h1 {
+    font-size: 2.3rem;
+    letter-spacing: 2px;
+    text-shadow: 3px 3px 0 #3e2413;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    text-align: center;
+    word-break: break-word;
+}
+
+.gold {
+    color: #e5b873;
+    font-weight: bold;
+    background: linear-gradient(135deg, #f5cf8b, #c78d3e);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    text-shadow: none;
+}
+
+.subtitle {
+    text-align: center;
+    font-style: italic;
+    margin: 0.5rem 0 0.8rem;
+    opacity: 0.9;
+    font-size: 1rem;
+}
+
+.batik-divider {
+    height: 6px;
+    background: repeating-linear-gradient(90deg, #c28a4b, #c28a4b 20px, #e9bc7d 20px, #e9bc7d 40px);
+    width: 80%;
+    margin: 0.8rem auto 1.5rem;
+    border-radius: 10px;
+    max-width: 300px;
+}
+
+/* TIMELINE SLIDER */
+.timeline-slider-container {
+    background: #2f1f12e0;
+    border-radius: 60px;
+    padding: 1rem 1.8rem;
+    margin-bottom: 2rem;
+    border: 1px solid #b87a3b;
+}
+
+.date-slider-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    margin-bottom: 12px;
+    flex-wrap: wrap;
+}
+
+.date-range {
+    background: #1f1308;
+    padding: 6px 16px;
+    border-radius: 40px;
+    font-weight: bold;
+    font-size: 0.9rem;
+    color: #fad98b;
+    box-shadow: inset 0 0 3px #a55d2a, 0 2px 5px rgba(0,0,0,0.3);
+    text-align: center;
+    flex: 1;
+    min-width: 150px;
+}
+
+.slide-nav {
+    background: #926e42;
+    border: none;
+    color: #ffe0b5;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: 0.2s;
+    font-size: 1.2rem;
+    box-shadow: 0 3px 4px black;
+    flex-shrink: 0;
+}
+
+.slide-nav:hover {
+    background: #bb874b;
+    transform: scale(1.03);
+    color: white;
+}
+
+.timeline-slider {
+    width: 100%;
+    height: 6px;
+    -webkit-appearance: none;
+    background: #644b2c;
+    border-radius: 5px;
+    outline: none;
+    margin: 15px 0 10px;
+}
+
+.timeline-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 22px;
+    height: 22px;
+    background: #f5bc70;
+    border-radius: 50%;
+    cursor: pointer;
+    border: 2px solid #482b15;
+    box-shadow: 0 2px 6px black;
+}
+
+.slider-labels {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.7rem;
+    padding: 0 5px;
+    color: #e2c19b;
+    font-weight: bold;
+    flex-wrap: wrap;
+    gap: 5px;
+}
+
+.slider-labels span {
+    padding: 2px 6px;
+    border-radius: 20px;
+    transition: all 0.2s;
+    white-space: nowrap;
+}
+
+.slider-labels span:hover {
+    background: rgba(210, 140, 70, 0.3);
+}
+
+/* HISTORY CARD WRAPPER UNTUK ANIMASI SMOOTH */
+.history-card-wrapper {
+    perspective: 1000px;
+    margin: 1.5rem 0;
+}
+
+.history-card {
+    background: linear-gradient(145deg, #3a281b, #2c1b0f);
+    border-radius: 38px;
+    padding: 1.6rem;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 15px 25px rgba(0,0,0,0.5), inset 0 0 0 2px rgba(210, 160, 90, 0.3);
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    opacity: 1;
+    transform: translateX(0) scale(1);
+}
+
+/* Animasi smooth saat ganti slide */
+.history-card.slide-exit {
+    opacity: 0;
+    transform: translateX(-30px) scale(0.96);
+    transition: all 0.35s ease-out;
+}
+
+.history-card.slide-enter {
+    opacity: 0;
+    transform: translateX(30px) scale(0.96);
+}
+
+.history-card.slide-enter-active {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+    transition: all 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+}
+
+.card-batik-pattern {
+    position: absolute;
+    top: -20px;
+    right: -20px;
+    width: 150px;
+    height: 150px;
+    opacity: 0.15;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path fill="none" stroke="%23e5b570" stroke-width="1.5" d="M20,20 L30,25 L35,15 L45,22 L55,18 L60,28 L75,24 L78,35 L88,30 L85,45 L92,52 L82,60 L85,72 L73,68 L66,78 L54,72 L44,80 L34,74 L24,78 L20,66 L10,62 L15,50 L8,40 L18,35 L22,25 Z"/><circle cx="48" cy="48" r="5" stroke="%23e5b570" fill="none"/><path d="M65 55 L72 62 L62 68 Z"/></svg>');
+    background-repeat: no-repeat;
+    background-size: contain;
+    pointer-events: none;
+}
+
+/* GAMBAR SEJARAH */
+.history-image-container {
+    width: 100%;
+    height: 250px;
+    border-radius: 28px;
+    overflow: hidden;
+    margin-bottom: 1.5rem;
+    position: relative;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+}
+
+.history-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.history-card:hover .history-image {
+    transform: scale(1.03);
+}
+
+.image-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(100, 50, 20, 0.2), rgba(0,0,0,0.1));
+    pointer-events: none;
+}
+
+.history-content {
+    position: relative;
+    z-index: 3;
+}
+
+.history-date {
+    font-size: 1.9rem;
+    font-weight: bold;
+    font-family: monospace;
+    background: #291a0c;
+    display: inline-block;
+    padding: 0.2rem 1.2rem;
+    border-radius: 60px;
+    letter-spacing: 1px;
+    margin-bottom: 1.3rem;
+    color: #ffd78c;
+    border-left: 6px solid #cb7e3a;
+    word-break: keep-all;
+}
+
+.history-card h2 {
+    font-size: 2rem;
+    margin: 0.8rem 0 1rem;
+    color: #ffeaac;
+    line-height: 1.3;
+    word-break: break-word;
+}
+
+.history-description {
+    line-height: 1.7;
+    font-size: 1.08rem;
+    background: #1f1309a0;
+    padding: 1rem 1.2rem;
+    border-radius: 28px;
+    backdrop-filter: blur(3px);
+    word-break: break-word;
+}
+
+.history-icon {
+    font-size: 3rem;
+    text-align: right;
+    margin-top: 0.7rem;
+    opacity: 0.5;
+}
+
+/* EDITOR NOTE */
+.editor-note {
+    background: #2a3b1fe0;
+    border-radius: 20px;
+    padding: 1rem 1.5rem;
+    margin: 1rem 0 0.5rem;
+    text-align: center;
+    border-left: 6px solid #f5bc70;
+    border-right: 1px solid #b87a3b;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.editor-note i {
+    font-size: 1.4rem;
+    color: #f5bc70;
+}
+
+.editor-note code {
+    background: #1a1a0e;
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-family: monospace;
+    color: #ffd966;
+    font-size: 0.8rem;
+    word-break: break-word;
+}
+
+footer {
+    text-align: center;
+    margin-top: 2rem;
+    font-size: 0.8rem;
+    padding-top: 0.8rem;
+    border-top: 1px dashed #b47c44;
+}
+
+/* ============================================ */
+/* ========== RESPONSIVE BREAKPOINTS ========== */
+/* ============================================ */
+
+/* Tablet (max-width: 768px) */
+@media (max-width: 768px) {
+    body {
+        padding: 0.8rem;
+    }
+    
+    .container {
+        padding: 1.2rem;
+        border-radius: 40px 40px 32px 32px;
+    }
+    
+    header h1 {
+        font-size: 1.6rem;
+        gap: 8px;
+    }
+    
+    .subtitle {
+        font-size: 0.85rem;
+    }
+    
+    .timeline-slider-container {
+        padding: 0.8rem 1.2rem;
+    }
+    
+    .date-range {
+        font-size: 0.75rem;
+        padding: 4px 12px;
+        min-width: 120px;
+    }
+    
+    .slide-nav {
+        width: 34px;
+        height: 34px;
+        font-size: 1rem;
+    }
+    
+    .history-card {
+        padding: 1.2rem;
+        border-radius: 28px;
+    }
+    
+    .history-image-container {
+        height: 200px;
+        border-radius: 20px;
+    }
+    
+    .history-date {
+        font-size: 1.3rem;
+        padding: 0.15rem 1rem;
+        margin-bottom: 0.8rem;
+    }
+    
+    .history-card h2 {
+        font-size: 1.5rem;
+        margin: 0.5rem 0 0.8rem;
+    }
+    
+    .history-description {
+        font-size: 0.95rem;
+        padding: 0.8rem 1rem;
+        line-height: 1.5;
+    }
+    
+    .history-icon {
+        font-size: 2rem;
+    }
+    
+    .editor-note {
+        padding: 0.7rem 1rem;
+        font-size: 0.75rem;
+    }
+    
+    .editor-note i {
+        font-size: 1.1rem;
+    }
+    
+    .editor-note code {
+        font-size: 0.7rem;
+        padding: 2px 6px;
+    }
+    
+    .slider-labels span {
+        font-size: 0.6rem;
+        padding: 1px 4px;
+    }
+}
+
+/* Mobile (max-width: 480px) */
+@media (max-width: 480px) {
+    body {
+        padding: 0.5rem;
+    }
+    
+    .container {
+        padding: 1rem;
+        border-radius: 28px 28px 24px 24px;
+    }
+    
+    header h1 {
+        font-size: 1.3rem;
+        flex-direction: column;
+        gap: 4px;
+    }
+    
+    header h1 i {
+        font-size: 1.2rem;
+    }
+    
+    .subtitle {
+        font-size: 0.75rem;
+    }
+    
+    .batik-divider {
+        width: 90%;
+        margin: 0.5rem auto 1rem;
+    }
+    
+    .timeline-slider-container {
+        padding: 0.6rem 1rem;
+        border-radius: 40px;
+    }
+    
+    .date-slider-wrapper {
+        gap: 8px;
+    }
+    
+    .date-range {
+        font-size: 0.65rem;
+        padding: 3px 8px;
+        min-width: 100px;
+    }
+    
+    .slide-nav {
+        width: 30px;
+        height: 30px;
+        font-size: 0.9rem;
+    }
+    
+    .timeline-slider {
+        margin: 10px 0 8px;
+    }
+    
+    .timeline-slider::-webkit-slider-thumb {
+        width: 18px;
+        height: 18px;
+    }
+    
+    .slider-labels {
+        gap: 2px;
+    }
+    
+    .slider-labels span {
+        font-size: 0.55rem;
+        padding: 1px 3px;
+    }
+    
+    .history-card-wrapper {
+        margin: 1rem 0;
+    }
+    
+    .history-card {
+        padding: 1rem;
+        border-radius: 24px;
+    }
+    
+    .history-image-container {
+        height: 160px;
+        border-radius: 16px;
+        margin-bottom: 1rem;
+    }
+    
+    .history-date {
+        font-size: 1rem;
+        padding: 0.1rem 0.8rem;
+        border-left-width: 4px;
+        margin-bottom: 0.6rem;
+    }
+    
+    .history-card h2 {
+        font-size: 1.2rem;
+        margin: 0.4rem 0 0.6rem;
+    }
+    
+    .history-description {
+        font-size: 0.85rem;
+        padding: 0.6rem 0.8rem;
+        border-radius: 20px;
+        line-height: 1.45;
+    }
+    
+    .history-icon {
+        font-size: 1.6rem;
+        margin-top: 0.5rem;
+    }
+    
+    .card-batik-pattern {
+        width: 100px;
+        height: 100px;
+        top: -10px;
+        right: -10px;
+    }
+    
+    .editor-note {
+        padding: 0.6rem 0.8rem;
+        margin: 0.7rem 0 0.3rem;
+        font-size: 0.65rem;
+        border-left-width: 4px;
+        gap: 6px;
+    }
+    
+    .editor-note i {
+        font-size: 0.9rem;
+    }
+    
+    .editor-note code {
+        font-size: 0.6rem;
+        padding: 2px 4px;
+    }
+    
+    footer {
+        margin-top: 1.2rem;
+        font-size: 0.65rem;
+        padding-top: 0.6rem;
+    }
+}
+
+/* Mobile kecil (max-width: 375px) */
+@media (max-width: 375px) {
+    .history-image-container {
+        height: 140px;
+    }
+    
+    .history-card h2 {
+        font-size: 1.1rem;
+    }
+    
+    .history-description {
+        font-size: 0.8rem;
+    }
+    
+    .date-range {
+        font-size: 0.6rem;
+        min-width: 85px;
+    }
+    
+    .slide-nav {
+        width: 28px;
+        height: 28px;
+    }
+    
+    .timeline-slider-container {
+        padding: 0.5rem 0.8rem;
+    }
+}
+
+/* Untuk layar sangat besar (desktop wide) */
+@media (min-width: 1400px) {
+    .container {
+        max-width: 1300px;
+    }
+    
+    header h1 {
+        font-size: 2.8rem;
+    }
+    
+    .history-image-container {
+        height: 320px;
+    }
+    
+    .history-date {
+        font-size: 2.2rem;
+    }
+    
+    .history-card h2 {
+        font-size: 2.3rem;
+    }
+    
+    .history-description {
+        font-size: 1.2rem;
+    }
+}
+
+/* Landscape mode untuk mobile */
+@media (max-width: 768px) and (orientation: landscape) {
+    .history-image-container {
+        height: 180px;
+    }
+    
+    .history-card h2 {
+        font-size: 1.3rem;
+    }
+    
+    .container {
+        padding: 1rem;
+    }
+}

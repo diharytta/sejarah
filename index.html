@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Jejak Sejarah Nusantara - Batik & Coklat</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Font Awesome 6 (free) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="batik-overlay"></div>
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-scroll"></i> JEJAK SEJARAH <span class="gold">NUSANTARA</span></h1>
+            <p class="subtitle">Menelusuri waktu dengan warisan batik & cokelat</p>
+            <div class="batik-divider"></div>
+        </header>
+
+        <!-- Slider Tanggal & Navigasi -->
+        <div class="timeline-slider-container">
+            <div class="date-slider-wrapper">
+                <button class="slide-nav prev" id="prevSlideBtn"><i class="fas fa-chevron-left"></i></button>
+                <div class="date-range" id="dateRangeDisplay"></div>
+                <button class="slide-nav next" id="nextSlideBtn"><i class="fas fa-chevron-right"></i></button>
+            </div>
+            <input type="range" id="timelineSlider" class="timeline-slider" min="0" max="0" step="1" value="0">
+            <div class="slider-labels" id="sliderLabels"></div>
+        </div>
+
+        <!-- Card Sejarah Utama dengan Gambar & Animasi Smooth -->
+        <div class="history-card-wrapper">
+            <div class="history-card" id="historyCard">
+                <div class="card-batik-pattern"></div>
+                <div class="history-image-container">
+                    <img id="historyImage" class="history-image" src="assets/default-history.jpg" alt="Ilustrasi Sejarah" onerror="this.src='https://picsum.photos/id/104/400/250'">
+                    <div class="image-overlay"></div>
+                </div>
+                <div class="history-content">
+                    <div class="history-date" id="historyDate">-</div>
+                    <h2 id="historyTitle">Selamat datang</h2>
+                    <div class="history-description" id="historyDesc">
+                        Geser slider atau tekan panah untuk menjelajahi peristiwa bersejarah.
+                    </div>
+                    <div class="history-icon"><i class="fas fa-landmark"></i></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Petunjuk Penggunaan Gambar Lokal -->
+        <div class="editor-note">
+            <i class="fas fa-image"></i>
+            <span><strong>Petunjuk Gambar Lokal:</strong> Simpan gambar di folder <code>assets/</code> lalu isi <code>imageUrl: "assets/nama-file.jpg"</code></span>
+        </div>
+
+        <div class="editor-note">
+            <i class="fas fa-code"></i>
+            <span><strong>Mode Editor:</strong> Tambah/Ubah Sejarah di <strong>script.js</strong> (cari <code>// ========== DATA SEJARAH - EDIT DI SINI ==========</code>)</span>
+        </div>
+
+        <footer>
+            <p><i class="fas fa-crown"></i> Terinspirasi dari warisan batik & kehangatan cokelat | Arsip Nusantara</p>
+        </footer>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
